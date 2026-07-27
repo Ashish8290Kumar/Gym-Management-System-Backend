@@ -9,7 +9,6 @@ import com.AshishWork.GymManagementSystem.entity.User;
 import com.AshishWork.GymManagementSystem.jwt.JwtUtils;
 import com.AshishWork.GymManagementSystem.repository.UserRepository;
 import com.AshishWork.GymManagementSystem.security.CustomUserDetails;
-import com.AshishWork.GymManagementSystem.security.CustomUserDetailsService;
 import com.AshishWork.GymManagementSystem.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -30,25 +29,32 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public RegisterResponse registerNewUser(RegisterRequest request) {
+
         if (userRepo.findByUsername(request.getUsername()).isPresent()) {
-            throw new RuntimeException("Error: Username is already taken!");
+            return new RegisterResponse("Username is already taken!", false, null, null, null);
         }
         if (userRepo.findByEmail(request.getEmail()).isPresent()) {
-            throw new RuntimeException("Error: Email identity is already registered!");
+            return new RegisterResponse("Email identity is already registered!", false, null, null, null);
         }
+
         User user = new User();
         user.setUsername(request.getUsername());
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setPhoneNumber(request.getPhoneNumber());
         user.setAge(request.getAge());
-        user.setGender(request.getGender());
 
-        try{
+
+        if (request.getGender() != null) {
+            user.setGender(request.getGender().toUpperCase());
+        }
+
+        try {
             user.setRole(Role.valueOf(request.getRole().toUpperCase()));
-        }catch (Exception e){
+        } catch (Exception e) {
             user.setRole(Role.MEMBER);
         }
+
         User savedUser = userRepo.save(user);
 
         return new RegisterResponse(
