@@ -14,8 +14,10 @@ public class WebCorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/api/**")
-                        // FIXED: Accepts any local port variations during your local development tests
-                        .allowedOriginPatterns("http://localhost:[*]")
+
+                        .allowedOriginPatterns("http://localhost:*")
+
+                        .allowedOriginPatterns("https://gym-management-system-frontend.onrender.com")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);
