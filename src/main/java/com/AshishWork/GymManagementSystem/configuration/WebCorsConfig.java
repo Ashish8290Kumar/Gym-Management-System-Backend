@@ -14,9 +14,9 @@ public class WebCorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/api/**")
-
+                        // Local dev (React/Vite on localhost ports)
                         .allowedOriginPatterns("http://localhost:*")
-
+                        // Production frontend domain (replace with your actual deployed frontend URL)
                         .allowedOriginPatterns("https://gym-management-system-frontend.onrender.com")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
