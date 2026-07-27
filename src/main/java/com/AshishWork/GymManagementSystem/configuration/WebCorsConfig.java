@@ -16,8 +16,8 @@ public class WebCorsConfig {
                 registry.addMapping("/api/**")
                         // Local dev (React/Vite on localhost ports)
                         .allowedOriginPatterns("http://localhost:*")
-                        // Production frontend domain (replace with your actual deployed frontend URL)
-                        .allowedOriginPatterns("https://gym-management-system-frontend.onrender.com")
+                        // Production frontend domain (Render frontend link)
+                        .allowedOriginPatterns("https://gym-management-system-z72s.onrender.com")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);
